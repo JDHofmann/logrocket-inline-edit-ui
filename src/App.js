@@ -3,59 +3,71 @@ import Editable from "./Editable";
 
 import "./App.css";
 
-function App() {
-  const inputRef = useRef();
-  const textareaRef = useRef();
-  const [task, setTask] = useState("");
-  const [description, setDescription] = useState("");
+class App extends React.Component {
+  // textareaRef = useRef();
+  // const  inputRef = useRef();
+  // [task, setTask] = useState("");
+  // [description, setDescription] = useState("");
 
-  return (
-    <div className="w-full max-w-md mx-auto">
-      <form className=" bg-white rounded px-8 py-8 pt-8">
-        <div className="px-4 pb-4">
-          <h1 className="uppercase py-2 px-3 font-bold text-xl">
+
+  state = {
+    task: "",
+    description: "",
+    currentInput: null
+  }
+
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  render(){
+
+    return (
+      <form>
+          <h1>
             Inline Editable UI
           </h1>
-        </div>
-        <div className="px-4 pb-4">
+        <div>
           <Editable
-            text={task}
-            placeholder="Write a task name"
-            childRef={inputRef}
+            text={this.state.task}
             type="input"
+            placeholder="Write a task name"
+            childRef="top"
           >
             <input
-              ref={inputRef}
+              ref="top"
               type="text"
               name="task"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
               placeholder="Write a task name"
-              value={task}
-              onChange={e => setTask(e.target.value)}
+              value={this.state.task}
+              onChange={this.handleChange}
             />
+            <h2>Child only shows up if Editable p tag is clicked on</h2>
           </Editable>
         </div>
-        <div className="px-4 pb-4">
+        <div>
           <Editable
-            text={description}
+            text={this.state.description}
             placeholder="Description for the task"
-            childRef={textareaRef}
+            // childRef={textareaRef}
             type="textarea"
           >
             <textarea
-              ref={textareaRef}
+              // ref={textareaRef}
               name="description"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
               placeholder="Description for the task"
               rows="5"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
+              value={this.state.description}
+              onChange={this.handleChange}
             />
           </Editable>
         </div>
       </form>
-    </div>
   );
+
+  }
+
+  
 }
 
 export default App;
